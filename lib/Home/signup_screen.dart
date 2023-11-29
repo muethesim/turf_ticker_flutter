@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:turf_ticker/Api/api_methods.dart';
 import 'package:turf_ticker/Home/signup_screen_2.dart';
 
 class ScreenSignup extends StatefulWidget {
@@ -106,19 +107,32 @@ class _ScreenSignupState extends State<ScreenSignup> {
                     Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25),
                         child: GestureDetector(
-                          onTap: () {
+                          onTap: () async {
                             if (_passwordController.text !=
                                 _confirmPasswordController.text) {
                               print("Password Missmatch");
                             } else if (_usernameController.text == "" ||
                                 _passwordController.text == "") {
                               print("Enter All Elements");
+                            } else if (_passwordController.text.length < 8) {
+                              print("PAssword Should At least Be 8 Chars");
                             } else {
                               // !check EMail Availability
-                              // !Store In Shared Preferences
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (ctx) =>
-                                      const ScreenSecondSignUp()));
+                              bool emailAvailability = await APICalls()
+                                  .checkMail(_usernameController.text);
+                              if (emailAvailability) {
+                                // !Store In Shared Preferences
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (ctx) => ScreenSecondSignUp(
+                                        mail: _usernameController.text,
+                                        password: _passwordController.text),
+                                  ),
+                                );
+                              } else {
+                                // !Email Exists
+                                print("Exists");
+                              }
                             }
                           },
                           child: Container(

@@ -4,22 +4,46 @@ class APICalls {
   final uri = "https://muethesimpk.pythonanywhere.com/api/";
 
   Future<void> login(email, password) async {
-    var bd = {'email': email, 'password': password};
+    var body = {'email': email, 'password': password};
     var url = Uri.parse('${uri}login');
-    var response = await http.post(url, body: bd);
+    var response = await http.post(url, body: body);
     if (response.statusCode == 202) {
       // !Logged IN
-      print("Logged In");
     } else if (response.statusCode == 404) {
-      print("No User");
+      // !No User
     } else if (response.statusCode == 401) {
-      print("Wrong Password");
+      // !Wrong Password
     } else {
-      print("Some Error Occured!!");
+      // !error
+    }
+  }
+
+  Future<void> signup(email, password, username, phone, name) async {
+    print(username);
+    var body = {
+      'email': email,
+      'username': username,
+      'password1': password,
+      'password2': password,
+      'name': name,
+      'phone': phone
+    };
+    var url = Uri.parse('${uri}register');
+    var response = await http.post(url, body: body);
+    print(response.statusCode);
+    print(response.body);
+  }
+
+  checkMail(email) async {
+    var url = Uri.parse('${uri}check-email');
+    var body = {'email': email};
+    var response = await http.post(url, body: body);
+    if (response.statusCode == 200) {
+      return true;
+    } else if (response.statusCode == 400) {
+      return false;
+    } else {
+      // !Raise An Exception
     }
   }
 }
-
-
-// var response =
-//         await http.get(url, headers: {'content-type': 'multipart/form-data'});

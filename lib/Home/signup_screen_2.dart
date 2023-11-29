@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:turf_ticker/Api/api_methods.dart';
 
 class ScreenSecondSignUp extends StatefulWidget {
-  const ScreenSecondSignUp({super.key});
+  final String mail;
+  final String password;
+
+  const ScreenSecondSignUp(
+      {super.key, required this.mail, required this.password});
 
   @override
   State<ScreenSecondSignUp> createState() => _ScreenSecondSignUpState();
@@ -75,7 +80,6 @@ class _ScreenSecondSignUpState extends State<ScreenSecondSignUp> {
                       margin: const EdgeInsets.symmetric(horizontal: 25),
                       child: TextField(
                         controller: _nameController,
-                        obscureText: true,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Name',
@@ -93,7 +97,6 @@ class _ScreenSecondSignUpState extends State<ScreenSecondSignUp> {
                       margin: const EdgeInsets.symmetric(horizontal: 25),
                       child: TextField(
                         controller: _phoneController,
-                        obscureText: true,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Phone Number',
@@ -106,8 +109,15 @@ class _ScreenSecondSignUpState extends State<ScreenSecondSignUp> {
                     Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25),
                         child: GestureDetector(
-                          onTap: () {
+                          onTap: () async {
                             // !Sign Up
+                            final username = _usernameController.text;
+                            var phone = _phoneController.text;
+                            var name = _nameController.text;
+                            APICalls().signup(widget.mail, widget.password,
+                                username, phone, name);
+                            Navigator.popUntil(
+                                context, ModalRoute.withName('/'));
                           },
                           child: Container(
                             width: double.maxFinite,
