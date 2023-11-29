@@ -93,30 +93,31 @@ class _ScreenLoginState extends State<ScreenLogin> {
                       height: 20,
                     ),
                     Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25),
-                        child: GestureDetector(
-                          onTap: () async {
-                            await APICalls().login(_usernameController.text,
-                                _passwordController.text);
-                          },
-                          child: Container(
-                            width: double.maxFinite,
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.only(top: 20, bottom: 20),
-                            decoration: BoxDecoration(
-                              color: Colors.brown,
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: const Text(
-                              "Login",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
-                              ),
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: GestureDetector(
+                        onTap: () async {
+                          await APICalls().login(_usernameController.text,
+                              _passwordController.text);
+                        },
+                        child: Container(
+                          width: double.maxFinite,
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.only(top: 20, bottom: 20),
+                          decoration: BoxDecoration(
+                            color: Colors.brown,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: const Text(
+                            "Login",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
                             ),
                           ),
-                        )),
+                        ),
+                      ),
+                    ),
                     const SizedBox(
                       height: 10,
                     ),

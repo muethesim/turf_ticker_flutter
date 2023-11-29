@@ -46,4 +46,11 @@ class APICalls {
       // !Raise An Exception
     }
   }
+
+  sendMessage(message) async {
+    var url = Uri.parse('${uri}message');
+    var body = {'username': 'muethesim', 'message': message};
+    var response = await http.post(url, body: body);
+    print(response.body);
+  }
 }
