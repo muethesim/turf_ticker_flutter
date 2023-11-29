@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:turf_ticker/Api/api_methods.dart';
 // import 'package:turf_ticker/Api/api_methods.dart';
-import 'package:turf_ticker/Home/signup_screen.dart';
+import 'package:turf_ticker/Auth/signup_screen.dart';
 
 class ScreenLogin extends StatefulWidget {
   const ScreenLogin({super.key});

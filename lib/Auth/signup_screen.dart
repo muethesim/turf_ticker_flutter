@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:turf_ticker/Api/api_methods.dart';
-import 'package:turf_ticker/Home/signup_screen_2.dart';
+import 'package:turf_ticker/Auth/signup_screen_2.dart';
 
 class ScreenSignup extends StatefulWidget {
   const ScreenSignup({super.key});
