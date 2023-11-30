@@ -97,17 +97,49 @@ class _ScreenLoginState extends State<ScreenLogin> {
                       padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: GestureDetector(
                         onTap: () async {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              });
                           final loginStatus = await APICalls().login(
                               _usernameController.text,
                               _passwordController.text);
+                          Navigator.of(context).pop();
                           if (loginStatus == 1) {
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ScreenHome()));
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const ScreenHome()));
                           } else if (loginStatus == 0) {
-                            // TODO: CREATE A WARNING MESSAGE
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  "Wrong Password",
+                                ),
+                                padding: EdgeInsets.all(20),
+                              ),
+                            );
                           } else if (loginStatus == -1) {
-                            // TODO: CREATE A WARNING MESSAGE
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  "No User Found",
+                                ),
+                                padding: EdgeInsets.all(20),
+                              ),
+                            );
                           } else {
-                            // TODO: CREATE A WARNING MESSAGE
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  "Unexpected Error Occured",
+                                ),
+                                padding: EdgeInsets.all(20),
+                              ),
+                            );
                           }
                         },
                         child: Container(

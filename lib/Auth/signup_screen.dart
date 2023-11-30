@@ -110,18 +110,45 @@ class _ScreenSignupState extends State<ScreenSignup> {
                           onTap: () async {
                             if (_passwordController.text !=
                                 _confirmPasswordController.text) {
-                              print("Password Missmatch");
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    "Password Missmatch",
+                                  ),
+                                  padding: EdgeInsets.all(20),
+                                ),
+                              );
                             } else if (_usernameController.text == "" ||
                                 _passwordController.text == "") {
-                              print("Enter All Elements");
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    "Enter All Elements",
+                                  ),
+                                  padding: EdgeInsets.all(20),
+                                ),
+                              );
                             } else if (_passwordController.text.length < 8) {
-                              print("PAssword Should At least Be 8 Chars");
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    "Password Should At least Be 8 Characters",
+                                  ),
+                                  padding: EdgeInsets.all(20),
+                                ),
+                              );
                             } else {
-                              // !check EMail Availability
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  });
                               bool emailAvailability = await APICalls()
                                   .checkMail(_usernameController.text);
+                              Navigator.of(context).pop();
                               if (emailAvailability) {
-                                // !Store In Shared Preferences
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (ctx) => ScreenSecondSignUp(
@@ -131,7 +158,14 @@ class _ScreenSignupState extends State<ScreenSignup> {
                                 );
                               } else {
                                 // !Email Exists
-                                print("Exists");
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      "Email Exists",
+                                    ),
+                                    padding: EdgeInsets.all(20),
+                                  ),
+                                );
                               }
                             }
                           },

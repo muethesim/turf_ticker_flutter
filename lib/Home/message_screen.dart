@@ -32,8 +32,24 @@ class BodyMessage extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () async {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      });
                   final message = messageController.text;
-                  APICalls().sendMessage(message);
+                  await APICalls().sendMessage(message);
+                  Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        "Message Send SuccessFully",
+                      ),
+                      padding: EdgeInsets.all(20),
+                    ),
+                  );
                 },
                 child: Container(
                   width: double.maxFinite,

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,7 +34,7 @@ class APICalls {
     }
   }
 
-  Future<void> signup(email, password, username, phone, name) async {
+  signup(email, password, username, phone, name) async {
     print(username);
     var body = {
       'email': email,
@@ -47,8 +46,11 @@ class APICalls {
     };
     var url = Uri.parse('${uri}register');
     var response = await http.post(url, body: body);
-    print(response.statusCode);
-    print(response.body);
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   checkMail(email) async {
@@ -66,10 +68,16 @@ class APICalls {
 
   sendMessage(message) async {
     var url = Uri.parse('${uri}message');
-    var body = {'username': 'muethesim', 'message': message};
+    final preferences = await SharedPreferences.getInstance();
+    final username = preferences.getStringList('user')![1];
+    var body = {'username': username, 'message': message};
     var response = await http.post(url, body: body);
-    print(response.body);
-    // !Remind User
+    if (response.statusCode == 201) {
+      return true;
+      // !Remind User
+    } else {
+      return false;
+    }
   }
 
   getSlots(date) async {
@@ -77,15 +85,59 @@ class APICalls {
     dt = dt.substring(0, 10);
     var url = Uri.parse('${uri}check-slot?$dt');
     var response = await http.get(url);
-    var jsonData = jsonDecode(response.body);
-    return jsonData;
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      return jsonData;
+    } else {
+      return [];
+    }
   }
 
   bookSlot(date, slot) async {
     var url = Uri.parse('${uri}book-slot');
-    var body = {'username': 'muethesim', 'date':date.toString().substring(0, 10), 'slot' : slot, 'paymentId' : 'pId'};
+    final preferences = await SharedPreferences.getInstance();
+    final username = preferences.getStringList('user')![1];
+
+    var body = {
+      'username': username,
+      'date': date.toString().substring(0, 10),
+      'slot': slot,
+      'paymentId': 'pId'
+    };
     var response = await http.post(url, body: body);
-    print(response.body);
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
+  viewUserSlots() async {
+    var url = Uri.parse('${uri}view-slot');
+    final preferences = await SharedPreferences.getInstance();
+    final username = preferences.getStringList('user')![1];
+    var body = {'username': username};
+    var response = await http.post(url, body: body);
+    print(response.statusCode);
+    print(response.body);
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      return jsonData;
+    } else {
+      return [];
+    }
+  }
+
+  cancelOrder(id) async {
+    var url = Uri.parse('${uri}cancel-slot');
+    final preferences = await SharedPreferences.getInstance();
+    final username = preferences.getStringList('user')![1];
+    var body = {'username': username, 'bookingId': id.toString()};
+    var response = await http.post(url, body: body);
+    if (response.statusCode == 202) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

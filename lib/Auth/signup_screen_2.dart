@@ -115,13 +115,26 @@ class _ScreenSecondSignUpState extends State<ScreenSecondSignUp> {
                             var phone = _phoneController.text;
                             var name = _nameController.text;
                             if (username == '' || phone == '' || name == '') {
-                              // TODO:Fill ALL
-                            } else if(phone.length < 10) {
-                              // TODO:PHONE LENGTH
-                            }
-                            else {
-                              APICalls().signup(widget.mail, widget.password,
-                                  username, phone, name);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    "Enter All Elements",
+                                  ),
+                                  padding: EdgeInsets.all(20),
+                                ),
+                              );
+                            } else if (phone.length < 10) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    "Enter A Valid Phone Number",
+                                  ),
+                                  padding: EdgeInsets.all(20),
+                                ),
+                              );
+                            } else {
+                              await APICalls().signup(widget.mail,
+                                  widget.password, username, phone, name);
                               Navigator.popUntil(
                                   context, ModalRoute.withName('/'));
                             }

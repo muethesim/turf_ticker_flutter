@@ -1,10 +1,14 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:turf_ticker/Home/profile_screen.dart';
-import 'package:turf_ticker/Home/turf_screen.dart';
+import 'package:turf_ticker/Opertaions/finished_screen.dart';
+import 'package:turf_ticker/Opertaions/upcoming_screen.dart';
 
 class ScreenViewBooking extends StatefulWidget {
-  const ScreenViewBooking({super.key});
+  final List finishedData;
+  final List upcomingData;
+
+  const ScreenViewBooking(
+      {super.key, required this.finishedData, required this.upcomingData});
 
   @override
   State<ScreenViewBooking> createState() => _ScreenViewBookingState();
@@ -12,16 +16,31 @@ class ScreenViewBooking extends StatefulWidget {
 
 class _ScreenViewBookingState extends State<ScreenViewBooking> {
   int pageNow = 0;
-  final _messageController = TextEditingController();
-  final screens = [
-    const BodyTurf(),
-    const BodyProfile(),
+
+  var screens = [
+    const BodyUpcoming(
+      data: [],
+    ),
+    const BodyFinished(
+      data: [],
+    ),
   ];
 
   @override
-  void dispose() {
-    _messageController.dispose();
-    super.dispose();
+  void initState() {
+    print("Finished : ${widget.finishedData}");
+    setState(() {
+      screens = [
+        BodyUpcoming(
+          data: widget.upcomingData,
+        ),
+        BodyFinished(
+          data: widget.finishedData,
+        ),
+      ];
+    });
+    print(widget.upcomingData);
+    super.initState();
   }
 
   @override
@@ -42,46 +61,12 @@ class _ScreenViewBookingState extends State<ScreenViewBooking> {
           Icon(Icons.check),
         ],
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Row(
-                  children: [
-                    Icon(
-                      Icons.arrow_back_ios_new,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      "Back",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 100,
-              ),
-              const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [],
-              )
-            ],
-          ),
-        ),
-      ),
+      body: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          height: double.maxFinite,
+          width: double.maxFinite,
+          color: Colors.grey.shade800,
+          child: screens[pageNow]),
     );
   }
 }

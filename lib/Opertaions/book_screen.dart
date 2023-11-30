@@ -22,11 +22,22 @@ class _ScreenBookingState extends State<ScreenBooking> {
         const Duration(days: 10),
       ),
     ).then((value) async {
-      var data = await APICalls().getSlots(value);
-      setState(() {
-        date = value!;
-        _slots = data;
-      });
+      if (value != null) {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            });
+        var data = await APICalls().getSlots(value);
+
+        setState(() {
+          date = value;
+          _slots = data;
+        });
+        Navigator.of(context).pop();
+      }
     });
   }
 
@@ -154,11 +165,37 @@ class _ScreenBookingState extends State<ScreenBooking> {
                           height: 50,
                         ),
                         GestureDetector(
-                          onTap: () {
+                          onTap: () async {
                             if (_slot == '') {
                               print("ENTER A SLOT");
                             } else {
-                              APICalls().bookSlot(date, _slot);
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  });
+                              await APICalls().bookSlot(date, _slot);
+                              _slots.remove(_slot);
+                              Navigator.of(context).pop();
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text("OK"),
+                                    ),
+                                  ],
+                                  title: const Text("Slot Booked"),
+                                  content: const Text("Your Slot Is Booked"),
+                                  contentPadding: const EdgeInsets.all(20),
+                                ),
+                              );
+                              // Navigator.of(context).pop();
                             }
                           },
                           child: Container(

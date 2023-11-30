@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:turf_ticker/Api/api_methods.dart';
 import 'package:turf_ticker/Opertaions/book_screen.dart';
 import 'package:turf_ticker/Opertaions/view_screen.dart';
 
@@ -60,9 +61,33 @@ class BodyTurf extends StatelessWidget {
                 width: 30,
               ),
               GestureDetector(
-                onTap: () {
+                onTap: () async {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      });
+                  var data = await APICalls().viewUserSlots();
+                  var finishedData = [];
+                  var upcomingData = [];
+                  for (var dt in data) {
+                    DateTime now = DateTime.now();
+                    DateTime thedt =
+                        DateTime.parse('${dt["date"]} ${dt["slot"]}');
+                    if (thedt.isBefore(now)) {
+                      finishedData.add(dt);
+                    } else {
+                      upcomingData.add(dt);
+                    }
+                  }
+                  Navigator.of(context).pop();
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ScreenViewBooking()));
+                      builder: (context) => ScreenViewBooking(
+                            finishedData: finishedData,
+                            upcomingData: upcomingData,
+                          )));
                 },
                 child: Container(
                   height: 150,
