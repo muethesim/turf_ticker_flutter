@@ -23,7 +23,8 @@ class BodyBot extends StatelessWidget {
             const Text(
               "WILL BE OUT SOON...",
               style: TextStyle(
-                fontSize: 32,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),

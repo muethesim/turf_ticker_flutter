@@ -1,20 +1,37 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class APICalls {
   final uri = "https://muethesimpk.pythonanywhere.com/api/";
 
-  Future<void> login(email, password) async {
+  login(email, password) async {
     var body = {'email': email, 'password': password};
     var url = Uri.parse('${uri}login');
     var response = await http.post(url, body: body);
     if (response.statusCode == 202) {
-      // !Logged IN
+      var jsonResponse = jsonDecode(response.body);
+      final preferences = await SharedPreferences.getInstance();
+      try {
+        preferences.setStringList('user', <String>[
+          jsonResponse['email'],
+          jsonResponse['username'],
+          jsonResponse['name'],
+          jsonResponse['phone'],
+        ]);
+        print(preferences.getStringList('user'));
+      } catch (err) {
+        print(err);
+      }
+      // print("SET${preferences.getString('email')!}");
+      return 1;
     } else if (response.statusCode == 404) {
-      // !No User
+      return -1;
     } else if (response.statusCode == 401) {
-      // !Wrong Password
+      return 0;
     } else {
-      // !error
+      return -2;
     }
   }
 

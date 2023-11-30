@@ -4,6 +4,7 @@ import 'package:turf_ticker/Auth/signup_screen.dart';
 import 'package:turf_ticker/Home/home_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.grey),
       title: 'Flutter Demo',
-      home: const ScreenHome(),
+      home: ScreenHome(),
       routes: {
         '/login': (context) => const ScreenLogin(),
         '/signup-1': (context) => const ScreenSignup(),

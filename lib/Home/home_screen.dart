@@ -2,6 +2,8 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:turf_ticker/Home/bot_screen.dart';
 import 'package:turf_ticker/Home/message_screen.dart';
+import 'package:turf_ticker/Home/profile_screen.dart';
+import 'package:turf_ticker/Home/turf_screen.dart';
 
 class ScreenHome extends StatefulWidget {
   const ScreenHome({super.key});
@@ -14,13 +16,8 @@ class _ScreenHomeState extends State<ScreenHome> {
   int pageNow = 0;
   final _messageController = TextEditingController();
   final screens = [
-    const Center(
-        child: Column(
-      children: [],
-    )),
-    const Center(
-      child: Text("Profile"),
-    ),
+    const BodyTurf(),
+    const BodyProfile(),
     const BodyMessage(),
     const BodyBot(),
   ];

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turf_ticker/Api/api_methods.dart';
 // import 'package:turf_ticker/Api/api_methods.dart';
 import 'package:turf_ticker/Auth/signup_screen.dart';
@@ -96,8 +97,18 @@ class _ScreenLoginState extends State<ScreenLogin> {
                       padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: GestureDetector(
                         onTap: () async {
-                          await APICalls().login(_usernameController.text,
+                          final loginStatus = await APICalls().login(
+                              _usernameController.text,
                               _passwordController.text);
+                          if (loginStatus == 1) {
+                            // TODO: LOGIN
+                          } else if (loginStatus == 0) {
+                            // TODO: CREATE A WARNING MESSAGE
+                          } else if (loginStatus == -1) {
+                            // TODO: CREATE A WARNING MESSAGE
+                          } else {
+                            // TODO: CREATE A WARNING MESSAGE
+                          }
                         },
                         child: Container(
                           width: double.maxFinite,
