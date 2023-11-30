@@ -114,10 +114,17 @@ class _ScreenSecondSignUpState extends State<ScreenSecondSignUp> {
                             final username = _usernameController.text;
                             var phone = _phoneController.text;
                             var name = _nameController.text;
-                            APICalls().signup(widget.mail, widget.password,
-                                username, phone, name);
-                            Navigator.popUntil(
-                                context, ModalRoute.withName('/'));
+                            if (username == '' || phone == '' || name == '') {
+                              // TODO:Fill ALL
+                            } else if(phone.length < 10) {
+                              // TODO:PHONE LENGTH
+                            }
+                            else {
+                              APICalls().signup(widget.mail, widget.password,
+                                  username, phone, name);
+                              Navigator.popUntil(
+                                  context, ModalRoute.withName('/'));
+                            }
                           },
                           child: Container(
                             width: double.maxFinite,

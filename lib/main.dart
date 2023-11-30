@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:turf_ticker/Auth/check_login.dart';
 import 'package:turf_ticker/Auth/login_screen.dart';
 import 'package:turf_ticker/Auth/signup_screen.dart';
 import 'package:turf_ticker/Home/home_screen.dart';
@@ -18,10 +19,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.grey),
       title: 'Flutter Demo',
-      home: ScreenHome(),
+      home: const CheckLogin(),
       routes: {
         '/login': (context) => const ScreenLogin(),
         '/signup-1': (context) => const ScreenSignup(),
+        '/home': (context) => const ScreenHome(),
       },
     );
   }

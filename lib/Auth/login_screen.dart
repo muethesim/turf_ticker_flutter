@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turf_ticker/Api/api_methods.dart';
 // import 'package:turf_ticker/Api/api_methods.dart';
 import 'package:turf_ticker/Auth/signup_screen.dart';
+import 'package:turf_ticker/Home/home_screen.dart';
 
 class ScreenLogin extends StatefulWidget {
   const ScreenLogin({super.key});
@@ -101,7 +101,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                               _usernameController.text,
                               _passwordController.text);
                           if (loginStatus == 1) {
-                            // TODO: LOGIN
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ScreenHome()));
                           } else if (loginStatus == 0) {
                             // TODO: CREATE A WARNING MESSAGE
                           } else if (loginStatus == -1) {
