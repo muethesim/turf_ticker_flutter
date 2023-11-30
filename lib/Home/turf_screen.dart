@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:turf_ticker/Opertaions/book_screen.dart';
-import 'package:turf_ticker/Opertaions/cancel_screen.dart';
-import 'package:turf_ticker/Opertaions/change_screen.dart';
 import 'package:turf_ticker/Opertaions/view_screen.dart';
 
 class BodyTurf extends StatelessWidget {
@@ -84,7 +82,7 @@ class BodyTurf extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        "View Bookings",
+                        "Bookings",
                         style: TextStyle(
                             fontWeight: FontWeight.w800, fontSize: 18),
                       ),
@@ -96,76 +94,6 @@ class BodyTurf extends StatelessWidget {
           ),
           const SizedBox(
             height: 30,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ScreenCancel()));
-                },
-                child: Container(
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey.shade400,
-                  ),
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.delete_outline,
-                        size: 50,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Cancel Orders",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w800, fontSize: 18),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 30,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ScreenChange()));
-                },
-                child: Container(
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey.shade400,
-                  ),
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.edit_outlined,
-                        size: 50,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Change Slots",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w800, fontSize: 18),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
           ),
         ],
       ),

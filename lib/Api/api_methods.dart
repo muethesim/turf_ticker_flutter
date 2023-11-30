@@ -69,6 +69,23 @@ class APICalls {
     var body = {'username': 'muethesim', 'message': message};
     var response = await http.post(url, body: body);
     print(response.body);
+    // !Remind User
+  }
+
+  getSlots(date) async {
+    var dt = date.toString();
+    dt = dt.substring(0, 10);
+    var url = Uri.parse('${uri}check-slot?$dt');
+    var response = await http.get(url);
+    var jsonData = jsonDecode(response.body);
+    return jsonData;
+  }
+
+  bookSlot(date, slot) async {
+    var url = Uri.parse('${uri}book-slot');
+    var body = {'username': 'muethesim', 'date':date.toString().substring(0, 10), 'slot' : slot, 'paymentId' : 'pId'};
+    var response = await http.post(url, body: body);
+    print(response.body);
   }
 
 }
